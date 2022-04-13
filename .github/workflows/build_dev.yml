@@ -2,13 +2,26 @@ name: build dev
 
 on:
   workflow_dispatch:
-    branches: [ dev/* ]
+    inputs:
+      greeting:
+        required: false
+        default: 'Hello'
+        type: string
+      name:
+        required: false
+        default: 'Seungkyu'
+        type: string
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - run: |
+          echo "Log level: ${{ github.event.inputs.logLevel }}"
+          echo "Tags: ${{ github.event.inputs.tags }}"
+
       - name: Checkout
         uses: actions/checkout@v2
 
