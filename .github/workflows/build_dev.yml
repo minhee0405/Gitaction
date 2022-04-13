@@ -2,7 +2,7 @@ name: build dev
 
 on:
   workflow_dispatch:
-    branches: [ dev/1.0.0 ]
+    branches: [ dev/* ]
 
 jobs:
   build:
