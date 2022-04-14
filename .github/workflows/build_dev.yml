@@ -3,14 +3,10 @@ name: build dev
 on:
   workflow_dispatch:
     inputs:
-      greeting:
+      versionUpdate:
         required: false
-        default: 'Hello'
-        type: string
-      name:
-        required: false
-        default: 'Seungkyu'
-        type: string
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -47,18 +43,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Generate dev APK
-        run: ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@master
-        with:
-          name: Build Artifacts
-          path: app/build/outputs/apk/debug
-
-#      - name: Get app version
-#        id: get_version
-#        uses: eriknyk/android-get-app-version-action@v1.0.1
+#      - name: Generate dev APK
+#        run: ./gradlew assembleDebug
+#
+#      - name: Upload APK
+#        uses: actions/upload-artifact@master
+#        with:
+#          name: Build Artifacts
+#          path: app/build/outputs/apk/debug
 
       - name: Get Android version
         id: test
@@ -79,7 +71,6 @@ jobs:
           version-name: "${{ steps.test.outputs.versionName }}"
           print-file: true
 
-
 #      - name: Update gradle version for Android
 #        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
 #        with:
@@ -87,7 +78,6 @@ jobs:
 #          version-code: 2
 #          version-name: '2.0'
 #          print-file: true
-
 
       - name: git auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
