@@ -71,6 +71,7 @@ jobs:
             echo "The versionCode was ${{ steps.test.outputs.versionCode }}"
             echo "The versionName was ${{ steps.test.outputs.versionName }}"
 
+
       - name: Update gradle version for Android
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
         with:
