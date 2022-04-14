@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 12
       - name: 'cat build.gradle'
-        run: cat ./android/app/build.gradle
+        run: cat ./app/build.gradle
       - name: 'Android autobump version'
         id: version-bump
         uses: 'MattiaFailla/android-version-autobump-action@main'
