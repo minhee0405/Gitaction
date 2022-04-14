@@ -6,9 +6,9 @@ name: Bump android version
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 12
       - name: 'cat build.gradle'
-        run: cat ./android/app/build.gradle
+        run: cat ./app/build.gradle
       - name: 'Android autobump version'
         id: version-bump
         uses: 'MattiaFailla/android-version-autobump-action@main'
