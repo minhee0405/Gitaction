@@ -56,3 +56,11 @@ jobs:
         with:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
+
+      - name: Update gradle version for Android
+        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+        with:
+          build-gradle-path: './app/build.gradle'
+          version-code: 2
+          version-name: '2.0'
+          print-file: true
