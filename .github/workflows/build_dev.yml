@@ -75,9 +75,10 @@ jobs:
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
         with:
           build-gradle-path: './app/build.gradle'
-          version-code: "${{ steps.test.outputs.versionCode + 1 }}"
+          version-code: "${ #toInt(steps.test.outputs.versionCode) + 1 }"
           version-name: "${{ steps.test.outputs.versionName }}"
           print-file: true
+
 
 #      - name: Update gradle version for Android
 #        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
