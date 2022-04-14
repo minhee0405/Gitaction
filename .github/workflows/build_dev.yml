@@ -56,18 +56,25 @@ jobs:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
 
-      - name: Update gradle version for Android
-        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+      - name: Bump version
+        uses: DoubleSymmetry/android-version-actions@v1.3
         with:
-          build-gradle-path: './app/build.gradle'
-          version-code: 2
-          version-name: '2.0'
-          print-file: true
+          gradlePath: './app/build.gradle' # or app/build.gradle.kts
+          versionName: 1.0.0
 
-      - name: git auto commit
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "[Bot] Update all the things!"
-          commit_user_name: minhee
-          commit_user_email: minhee@example.com
-          commit_author: minhee <minhee@example.com>
+
+#      - name: Update gradle version for Android
+#        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+#        with:
+#          build-gradle-path: './app/build.gradle'
+#          version-code: 2
+#          version-name: '2.0'
+#          print-file: true
+#
+#      - name: git auto commit
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        with:
+#          commit_message: "[Bot] Update all the things!"
+#          commit_user_name: minhee
+#          commit_user_email: minhee@example.com
+#          commit_author: minhee <minhee@example.com>
