@@ -65,15 +65,9 @@ jobs:
           version-name: '2.0'
           print-file: true
 
-      - name: Add build scan URL as PR comment
-          uses: actions/github-script@v5
-          if: github.event_name == 'pull_request' && failure()
+      - uses: stefanzweifel/git-auto-commit-action@v4
           with:
-            github-token: ${{secrets.GITHUB_TOKEN}}
-            script: |
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '❌ ${{ github.workflow }} failed: ${{ steps.gradle.outputs.build-scan-url }}'
-              })
+            commit_message: "[Bot] Update all the things!"
+            commit_user_name: minhee
+            commit_user_email: minhee@example.com
+            commit_author: minhee <minhee@example.com>
