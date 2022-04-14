@@ -65,7 +65,7 @@ jobs:
           version-name: '2.0'
           print-file: true
 
-      - name: "Add build scan URL as PR comment"
+      - name: Add build scan URL as PR comment
           uses: actions/github-script@v5
           if: github.event_name == 'pull_request' && failure()
           with:
