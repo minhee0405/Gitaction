@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       versionCode:
-        required: false
+        required: true
         default: 1
         type: string
 
@@ -63,21 +63,21 @@ jobs:
             echo "The versionCode was ${{ steps.test.outputs.versionCode }}"
             echo "The versionName was ${{ steps.test.outputs.versionName }}"
 
-      - name: Bump release version
-        id: bump_version
-        uses: christian-draeger/increment-semantic-version@1.0.2
-        with:
-          current-version: "${{ steps.test.outputs.versionName }}"
-          version-fragment: 'feature'
-      - name: Do something with your bumped release version
-        run: echo ${{ steps.bump_version.outputs.next-version }}
-        # will print 2.12.0
+#      - name: Bump release version
+#        id: bump_version
+#        uses: christian-draeger/increment-semantic-version@1.0.2
+#        with:
+#          current-version: "${{ steps.test.outputs.versionName }}"
+#          version-fragment: 'feature'
+#      - name: Do something with your bumped release version
+#        run: echo ${{ steps.bump_version.outputs.next-version }}
+#        # will print 2.12.0
 
       - name: Update gradle version for Android
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
         with:
           build-gradle-path: './app/build.gradle'
-          version-code: "${{ steps.test.outputs.versionCode }}"
+          version-code: "${{ github.event.inputs.versionCode }}"
           version-name: "${{ steps.bump_version.outputs.next-version }}"
           print-file: true
 
