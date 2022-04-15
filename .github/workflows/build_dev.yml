@@ -78,7 +78,7 @@ jobs:
         with:
           build-gradle-path: './app/build.gradle'
           version-code: "${{ steps.test.outputs.versionCode }}"
-          version-name: "${{ steps.test.outputs.versionName }}"
+          version-name: "${{ steps.bump_version.outputs.next-version }}"
           print-file: true
 
 #      - name: Update gradle version for Android
