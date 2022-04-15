@@ -3,10 +3,10 @@ name: build dev
 on:
   workflow_dispatch:
     inputs:
-      versionUpdate:
+      versionCode:
         required: false
-        default: false
-        type: boolean
+        default: 1
+        type: string
 
 jobs:
   build:
