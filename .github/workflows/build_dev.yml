@@ -52,16 +52,16 @@ jobs:
 #          name: Build Artifacts
 #          path: app/build/outputs/apk/debug
 
-#      - name: Get Android version
-#        id: test
-#        uses: ltDino/android-get-version-action@v1.0
-#        with:
-#          gradlePath: app/build.gradle # or app/build.gradle.kts
-#
-#      - name: Get the output
-#        run: |
-#            echo "The versionCode was ${{ steps.test.outputs.versionCode }}"
-#            echo "The versionName was ${{ steps.test.outputs.versionName }}"
+      - name: Get Android version
+        id: current_version
+        uses: ltDino/android-get-version-action@v1.0
+        with:
+          gradlePath: app/build.gradle # or app/build.gradle.kts
+
+      - name: Get the output
+        run: |
+            echo "The versionCode was ${{ steps.current_version.outputs.versionCode }}"
+            echo "The versionName was ${{ steps.current_version.outputs.versionName }}"
 
 #      - name: Bump release version
 #        id: bump_version
@@ -78,7 +78,7 @@ jobs:
         with:
           build-gradle-path: './app/build.gradle'
           version-code: "${{ github.event.inputs.versionCode }}"
-#          version-name: "${{ steps.bump_version.outputs.next-version }}"
+          version-name: "${{ steps.current_version.outputs.versionName }}"
           print-file: true
 
 #      - name: Update gradle version for Android
@@ -96,3 +96,12 @@ jobs:
           commit_user_name: minhee
           commit_user_email: minhee@example.com
           commit_author: minhee <minhee@example.com>
+
+      - name: Generate dev APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@master
+        with:
+          name: Build Artifacts
+          path: app/build/outputs/apk/debug
