@@ -10,7 +10,7 @@ android {
         applicationId "com.sample.myapplication"
         minSdk 28
         targetSdk 32
-        versionCode 4
+        versionCode 12
         versionName "3.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
