@@ -1,12 +1,15 @@
 name: build dev
 
 on:
-  workflow_dispatch:
-    inputs:
-      versionCode:
-        required: true
-        default: 1
-        type: string
+  pull_request:
+    
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      versionCode:
+#        required: true
+#        default: 1
+#        type: string
 
 jobs:
   build:
