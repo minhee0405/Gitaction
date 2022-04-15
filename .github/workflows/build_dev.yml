@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: branches
+        run: |
+          echo github ref is ${{ github.ref }}
+
       - run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
