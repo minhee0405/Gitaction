@@ -1,0 +1,107 @@
+name: build dev
+
+on:
+ workflow_dispatch:
+   inputs:
+     versionCode:
+       required: true
+       default: 1
+       type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          echo "Log level: ${{ github.event.inputs.logLevel }}"
+          echo "Tags: ${{ github.event.inputs.tags }}"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+#      - name: Generate dev APK
+#        run: ./gradlew assembleDebug
+#
+#      - name: Upload APK
+#        uses: actions/upload-artifact@master
+#        with:
+#          name: Build Artifacts
+#          path: app/build/outputs/apk/debug
+
+      - name: Get Android version
+        id: current_version
+        uses: ltDino/android-get-version-action@v1.0
+        with:
+          gradlePath: app/build.gradle # or app/build.gradle.kts
+
+      - name: Get the output
+        run: |
+            echo "The versionCode was ${{ steps.current_version.outputs.versionCode }}"
+            echo "The versionName was ${{ steps.current_version.outputs.versionName }}"
+
+#      - name: Bump release version
+#        id: bump_version
+#        uses: christian-draeger/increment-semantic-version@1.0.2
+#        with:
+#          current-version: "${{ steps.test.outputs.versionName }}"
+#          version-fragment: 'feature'
+#      - name: Do something with your bumped release version
+#        run: echo ${{ steps.bump_version.outputs.next-version }}
+#        # will print 2.12.0
+
+      - name: Update gradle version for Android
+        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+        with:
+          build-gradle-path: './app/build.gradle'
+          version-code: "${{ github.event.inputs.versionCode }}"
+          version-name: "${{ steps.current_version.outputs.versionName }}"
+          print-file: true
+
+#      - name: Update gradle version for Android
+#        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+#        with:
+#          build-gradle-path: './app/build.gradle'
+#          version-code: 2
+#          version-name: '2.0'
+#          print-file: true
+
+      - name: git auto commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[Bot] Update all the things!"
+          commit_user_name: minhee
+          commit_user_email: minhee@example.com
+          commit_author: minhee <minhee@example.com>
+
+      - name: Generate dev APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@master
+        with:
+          name: Build Artifacts
+          path: app/build/outputs/apk/debug
