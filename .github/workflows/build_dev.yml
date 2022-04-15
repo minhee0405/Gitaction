@@ -13,10 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check branches
-        if: ${{ github.ref == 'refs/heads/dev/*' }}
-        run: echo github ref is ${{ github.ref }}
-
       - run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
@@ -40,6 +36,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
+
+      - name: Check branches
+        if: ${{ github.ref == 'refs/heads/dev/*' }}
+        run: echo github ref is ${{ github.ref }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
