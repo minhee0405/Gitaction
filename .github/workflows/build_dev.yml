@@ -107,3 +107,10 @@ jobs:
           path: app/build/outputs/apk/debug
 
     if: contains(github.ref, 'dev')  # github branch가 dev 때만 실행한다.
+
+  deploy-firebase:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "github.ref: ${{ github.ref }}"
