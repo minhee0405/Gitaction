@@ -12,8 +12,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/main' }} && ${{ github.ref != 'refs/heads/release/stg' }}
-
     steps:
       - run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
@@ -107,3 +105,5 @@ jobs:
         with:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
+
+    if: contains(github.ref, 'dev')  # github branch가 dev 때만 실행한다.
