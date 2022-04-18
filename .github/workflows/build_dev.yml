@@ -9,16 +9,7 @@ on:
        type: string
 
 jobs:
-  check-branches:
-    runs-on: ubuntu-latest
-    steps:
-      - name: branches
-        if: ${{ github.ref != 'refs/heads/main' }} && ${{ github.ref != 'refs/heads/release/stg' }}
-        run: |
-          echo github ref is ${{ github.ref }}
-
   build:
-    needs: [ check-branches ]
     runs-on: ubuntu-latest
 
     steps:
@@ -114,3 +105,4 @@ jobs:
         with:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
+  if: contains(github.ref, 'dev')  # github branch가 dev 때만 실행한다.
