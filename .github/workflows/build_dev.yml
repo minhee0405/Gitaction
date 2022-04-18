@@ -9,17 +9,10 @@ on:
        type: string
 
 jobs:
-  check-branches:
-    runs-on: ubuntu-latest
-    steps:
-      - name: branches
-        if: ${{ github.ref != 'refs/heads/main' }} && ${{ github.ref != 'refs/heads/release/stg' }}
-        run: |
-          echo github ref is ${{ github.ref }}
 
   build:
-    needs: [ check-branches ]
     runs-on: ubuntu-latest
+    if: ${{ github.ref != 'refs/heads/main' }} && ${{ github.ref != 'refs/heads/release/stg' }}
 
     steps:
       - run: |
