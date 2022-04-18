@@ -1,17 +1,17 @@
 name: build dev
 
 on:
- workflow_dispatch:
-   inputs:
-     versionCode:
-       required: true
-       default: 1
-       type: string
+  workflow_dispatch:
+    inputs:
+      versionCode:
+        required: true
+        default: 1
+        type: string
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
-
     steps:
       - run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
@@ -43,14 +43,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-#      - name: Generate dev APK
-#        run: ./gradlew assembleDebug
-#
-#      - name: Upload APK
-#        uses: actions/upload-artifact@master
-#        with:
-#          name: Build Artifacts
-#          path: app/build/outputs/apk/debug
+      #      - name: Generate dev APK
+      #        run: ./gradlew assembleDebug
+      #
+      #      - name: Upload APK
+      #        uses: actions/upload-artifact@master
+      #        with:
+      #          name: Build Artifacts
+      #          path: app/build/outputs/apk/debug
 
       - name: Get Android version
         id: current_version
@@ -60,18 +60,18 @@ jobs:
 
       - name: Get the output
         run: |
-            echo "The versionCode was ${{ steps.current_version.outputs.versionCode }}"
-            echo "The versionName was ${{ steps.current_version.outputs.versionName }}"
+          echo "The versionCode was ${{ steps.current_version.outputs.versionCode }}"
+          echo "The versionName was ${{ steps.current_version.outputs.versionName }}"
 
-#      - name: Bump release version
-#        id: bump_version
-#        uses: christian-draeger/increment-semantic-version@1.0.2
-#        with:
-#          current-version: "${{ steps.test.outputs.versionName }}"
-#          version-fragment: 'feature'
-#      - name: Do something with your bumped release version
-#        run: echo ${{ steps.bump_version.outputs.next-version }}
-#        # will print 2.12.0
+      #      - name: Bump release version
+      #        id: bump_version
+      #        uses: christian-draeger/increment-semantic-version@1.0.2
+      #        with:
+      #          current-version: "${{ steps.test.outputs.versionName }}"
+      #          version-fragment: 'feature'
+      #      - name: Do something with your bumped release version
+      #        run: echo ${{ steps.bump_version.outputs.next-version }}
+      #        # will print 2.12.0
 
       - name: Update gradle version for Android
         uses: damienaicheh/update-android-version-gradle-action@v1.0.0
@@ -81,13 +81,13 @@ jobs:
           version-name: "${{ steps.current_version.outputs.versionName }}"
           print-file: true
 
-#      - name: Update gradle version for Android
-#        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
-#        with:
-#          build-gradle-path: './app/build.gradle'
-#          version-code: 2
-#          version-name: '2.0'
-#          print-file: true
+      #      - name: Update gradle version for Android
+      #        uses: damienaicheh/update-android-version-gradle-action@v1.0.0
+      #        with:
+      #          build-gradle-path: './app/build.gradle'
+      #          version-code: 2
+      #          version-name: '2.0'
+      #          print-file: true
 
       - name: git auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
@@ -105,4 +105,5 @@ jobs:
         with:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
-  if: contains(github.ref, 'dev')  # github branch가 dev 때만 실행한다.
+
+    if: contains(github.ref, 'dev')  # github branch가 dev 때만 실행한다.
