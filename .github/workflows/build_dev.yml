@@ -87,7 +87,7 @@ jobs:
 
 
       - name: android-version-actions
-      - uses: DoubleSymmetry/android-version-actions@v1.3
+        uses: DoubleSymmetry/android-version-actions@v1.3
         with:
           gradlePath: app/build.gradle # or app/build.gradle.kts
 
