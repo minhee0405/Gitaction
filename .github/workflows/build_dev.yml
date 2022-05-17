@@ -86,12 +86,29 @@ jobs:
       #          print-file: true
 
 
+#      - name: android-version-actions
+#        uses: DoubleSymmetry/android-version-actions@v1.3
+#        with:
+#          gradlePath: app/build.gradle # or app/build.gradle.kts
+#          versionCode: ${{ github.event.inputs.versionCode }}
+#          versionName: '1.0.0'
+
+
       - name: android-version-actions
         uses: DoubleSymmetry/android-version-actions@v1.3
         with:
           gradlePath: app/build.gradle # or app/build.gradle.kts
+
+          # versionCode
+          # ex. 10
+          # If versionCode is not set, auto-increment versionCode.
           versionCode: ${{ github.event.inputs.versionCode }}
-          versionName: 1.0.0
+
+          # versionName
+          # ex. 3.2.0
+          # If versionName is not set, the version does not be changed.
+          versionName: ''
+
 
       - name: git auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
