@@ -126,7 +126,7 @@ jobs:
         with:
           name: Build Artifacts
           path: app/build/outputs/apk/debug
-    if: contains(github.ref, 'dev')
+#     if: contains(github.ref, 'dev')
 
   deploy-firebase:
     needs: [ build ]
